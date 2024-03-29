@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "950851440300",
+    "project_id": "cardmovies-343fe",
+    "storage_bucket": "cardmovies-343fe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:950851440300:android:71848b6a82138f14e79909",
+        "android_client_info": {
+          "package_name": "com.example.card_movies"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAN3yrq_BIaOAU4wsT_TQ0kv7KHxfX04hI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
