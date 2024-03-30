@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_movies/models/api_constant.dart';
 import 'package:card_movies/models/movies_response.dart';
+import 'package:card_movies/pages_views/movies_details.dart';
 import 'package:flutter/material.dart';
 
 class SearchDetails extends StatefulWidget {
@@ -47,74 +48,81 @@ class _SearchDetailsState extends State<SearchDetails> {
                 itemCount: widget.movies?.length,
                 itemBuilder: (context, index) {
                   final movie = widget.movies![index]; // Get the current movie
-                  return Card(
-                    margin: EdgeInsets.only(bottom: 10, left: 10),
-                    color: Color.fromRGBO(52, 53, 52, 1.0),
-                    clipBehavior: Clip.antiAlias,
-                    shape: BeveledRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    elevation: 5,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.35,
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                "${ApiConstant.imageBaseUrl}${movie.posterPath}",
-                            imageBuilder: (context, imageProvider) => Container(
-                              height: 120, // Adjust the desired height
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: imageProvider,
-                                  fit: BoxFit.fill,
+                  return InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, MovieDetails.routeName,
+                          arguments: movie);
+                    },
+                    child: Card(
+                      margin: EdgeInsets.only(bottom: 10, left: 10),
+                      color: Color.fromRGBO(52, 53, 52, 1.0),
+                      clipBehavior: Clip.antiAlias,
+                      shape: BeveledRectangleBorder(
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      elevation: 5,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.35,
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  "${ApiConstant.imageBaseUrl}${movie.posterPath}",
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                height: 120, // Adjust the desired height
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.fill,
+                                  ),
                                 ),
                               ),
-                            ),
-                            placeholder: (context, url) =>
-                                Center(child: CircularProgressIndicator()),
-                            errorWidget: (context, url, error) => Center(
-                              child: Icon(
-                                Icons.error,
-                                color: Colors.red,
-                                size: 42,
+                              placeholder: (context, url) =>
+                                  Center(child: CircularProgressIndicator()),
+                              errorWidget: (context, url, error) => Center(
+                                child: Icon(
+                                  Icons.error,
+                                  color: Colors.red,
+                                  size: 42,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        SizedBox(width: 10),
-                        // Add some spacing between the image and other information
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                movie.title ?? 'Title Not Available',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize:
-                                      16, // Adjust the font size as needed
+                          SizedBox(width: 10),
+                          // Add some spacing between the image and other information
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  movie.title ?? 'Title Not Available',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize:
+                                        16, // Adjust the font size as needed
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                movie.releaseDate ?? 'Title Not Available',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize:
-                                      12, // Adjust the font size as needed
+                                SizedBox(
+                                  height: 5,
                                 ),
-                              ),
+                                Text(
+                                  movie.releaseDate ?? 'Title Not Available',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize:
+                                        12, // Adjust the font size as needed
+                                  ),
+                                ),
 
-                              // Add other movie information here...
-                            ],
+                                // Add other movie information here...
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
                 },
