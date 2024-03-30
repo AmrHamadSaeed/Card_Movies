@@ -2,6 +2,7 @@ import 'package:card_movies/MyThemeData.dart';
 import 'package:card_movies/api_manager.dart';
 import 'package:card_movies/models/movies_response.dart';
 import 'package:card_movies/pages_views/home/popular_movies/popular_widget.dart';
+import 'package:card_movies/pages_views/home/recomended_movies/top_rated_widget.dart';
 import 'package:card_movies/pages_views/home/upcomming_movies/new_realeases_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -108,6 +109,50 @@ class _HomeTabViewState extends State<HomeTabView> {
                     var sourcesList = snapshot.data?.results ?? [];
                     print("Amr0 $sourcesList");
                     return NewRealeasesWidget(snapshot.data!.results!);
+                  }),
+              FutureBuilder<MoviesModel?>(
+                  future: ApiManager.getTopRatedMovies(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          backgroundColor: MyThemeData.primaryLightColor,
+                        ),
+                      );
+
+                      /// handel user network disable => catch Api getSources (throw e)
+                    } else if (snapshot.hasError) {
+                      return Column(
+                        children: [
+                          Text('Something went wrong '),
+                          ElevatedButton(
+                              onPressed: () {
+                                ApiManager.getTopRatedMovies();
+                                setState(() {});
+                              },
+                              child: Text('user error'))
+                        ],
+                      );
+                    }
+
+                    if (snapshot.data?.success == false &&
+                        snapshot.data?.status_code == 34) {
+                      return Column(
+                        children: [
+                          Text(snapshot.data?.status_message ?? ''),
+                          ElevatedButton(
+                              onPressed: () {
+                                ApiManager.getTopRatedMovies();
+                                setState(() {});
+                              },
+                              child: Text('success == false'))
+                        ],
+                      );
+                    }
+                    var sourcesList = snapshot.data?.results ?? [];
+                    print("Amr0 $sourcesList");
+                    return TopRatedWidget(
+                        snapshot.data!.results!, 'Recommended');
                   }),
             ],
           ),
