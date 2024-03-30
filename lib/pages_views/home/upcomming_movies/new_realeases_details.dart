@@ -21,7 +21,7 @@ class _NewRealeasesDetailsState extends State<NewRealeasesDetails> {
   @override
   void initState() {
     super.initState();
-    // checkMovieInFireStore();
+    checkMovieInFireStore();
   }
 
   @override

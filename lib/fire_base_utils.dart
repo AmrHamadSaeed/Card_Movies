@@ -15,12 +15,18 @@ class FireBaseUtils {
     return docref.set(movie);
   }
 
-  static Future<QuerySnapshot<Movie>> readMovieFormFirebase(num id) async {
+  static Stream<QuerySnapshot<Movie>> readMoviesFromFirebaseAfterAdding() {
+    return getMoviesCollection().snapshots();
+  }
+
+  static Future<QuerySnapshot<Movie>> readMovieFormFirebase(
+    num id,
+  ) async {
     var mov = await getMoviesCollection().where('id', isEqualTo: id).get();
     return mov;
   }
 
-  static Future<void> DeletTask(String id) {
+  static Future<void> deleteTask(String id) {
     return getMoviesCollection().doc(id).delete();
   }
 }

@@ -104,9 +104,11 @@ class Movie {
     voteAverage = json['vote_average'];
     voteCount = json['vote_count'];
     DataBaseId = json['DataBaseId'];
+    isSelected = json['isSelected'];
   }
 
   String? DataBaseId;
+  bool? isSelected = false;
   bool? adult;
   String? backdropPath;
   num? budget;
@@ -136,6 +138,7 @@ class Movie {
     map['adult'] = adult;
     map['backdrop_path'] = backdropPath;
     map['DataBaseId'] = DataBaseId;
+    map['isSelected'] = isSelected;
     map['budget'] = budget;
     if (genres != null) {
       map['genres'] = genres?.map((v) => v.toJson()).toList();

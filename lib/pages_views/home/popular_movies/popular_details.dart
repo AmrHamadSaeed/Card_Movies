@@ -95,7 +95,7 @@ class _PopularDetailsState extends State<PopularDetails> {
                 } else {
                   isSelected = false;
 
-                  FireBaseUtils.DeletTask('${widget.movie.DataBaseId}');
+                  FireBaseUtils.deleteTask('${widget.movie.DataBaseId}');
                 }
                 setState(() {});
               },

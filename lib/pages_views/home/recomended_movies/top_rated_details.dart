@@ -74,7 +74,8 @@ class _TopRatedDetailsState extends State<TopRatedDetails> {
                           FireBaseUtils.AddMoviesToFirebase(widget.movie);
                         } else {
                           isSelected = false;
-                          FireBaseUtils.DeletTask('${widget.movie.DataBaseId}');
+                          FireBaseUtils.deleteTask(
+                              '${widget.movie.DataBaseId}');
                         }
                         setState(() {});
                       },
