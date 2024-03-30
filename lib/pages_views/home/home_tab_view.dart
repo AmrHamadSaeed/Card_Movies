@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 class HomeTabView extends StatefulWidget {
   static const String routeName = "HomeTabView";
 
-  const HomeTabView({super.key});
 
   @override
   State<HomeTabView> createState() => _HomeTabViewState();

@@ -6,16 +6,16 @@ import 'package:card_movies/pages_views/movies_details.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class NewRealeasesDetails extends StatefulWidget {
+class NewReleasesDetails extends StatefulWidget {
   Movie movie;
 
-  NewRealeasesDetails(this.movie);
+  NewReleasesDetails(this.movie);
 
   @override
-  State<NewRealeasesDetails> createState() => _NewRealeasesDetailsState();
+  State<NewReleasesDetails> createState() => _NewReleasesDetailsState();
 }
 
-class _NewRealeasesDetailsState extends State<NewRealeasesDetails> {
+class _NewReleasesDetailsState extends State<NewReleasesDetails> {
   bool isSelected = false;
 
   @override

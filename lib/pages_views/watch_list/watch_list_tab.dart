@@ -30,7 +30,7 @@ class WatchListTab extends StatelessWidget {
             ),
             Expanded(
                 child: StreamBuilder<QuerySnapshot<Movie>>(
-              stream: FireBaseUtils.readMoviesFromFirebaseAfterAdding(),
+              stream: FireBaseUtils.readMoviesWatchList(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(

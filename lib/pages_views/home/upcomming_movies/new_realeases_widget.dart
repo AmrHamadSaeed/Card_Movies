@@ -37,7 +37,7 @@ class NewRealeasesWidget extends StatelessWidget {
             items: movies.map((mov) {
               return Builder(
                 builder: (BuildContext context) {
-                  return NewRealeasesDetails(mov);
+                  return NewReleasesDetails(mov);
                 },
               );
             }).toList(),

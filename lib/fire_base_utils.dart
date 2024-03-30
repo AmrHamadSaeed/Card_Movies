@@ -15,10 +15,6 @@ class FireBaseUtils {
     return docref.set(movie);
   }
 
-  static Stream<QuerySnapshot<Movie>> readMoviesFromFirebaseAfterAdding() {
-    return getMoviesCollection().snapshots();
-  }
-
   static Future<QuerySnapshot<Movie>> readMovieFormFirebase(
     num id,
   ) async {
@@ -28,5 +24,9 @@ class FireBaseUtils {
 
   static Future<void> deleteTask(String id) {
     return getMoviesCollection().doc(id).delete();
+  }
+
+  static Stream<QuerySnapshot<Movie>> readMoviesWatchList() {
+    return getMoviesCollection().snapshots();
   }
 }
