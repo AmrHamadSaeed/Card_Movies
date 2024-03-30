@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_movies/models/api_constant.dart';
 import 'package:card_movies/models/movies_response.dart';
+import 'package:card_movies/pages_views/movies_details.dart';
 import 'package:flutter/material.dart';
 
 class PopularDetails extends StatelessWidget {
@@ -35,7 +36,13 @@ class PopularDetails extends StatelessWidget {
         Positioned(
           height: MediaQuery.of(context).size.height * 0.26,
           left: MediaQuery.of(context).size.height * 0.15,
-          child: Image.asset('assets/playbutton.png'),
+          child: InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, MovieDetails.routeName,
+                  arguments: movie);
+            },
+            child: Image.asset('assets/playbutton.png'),
+          ),
         ),
         Positioned(
           width: MediaQuery.of(context).size.width * 0.35,
