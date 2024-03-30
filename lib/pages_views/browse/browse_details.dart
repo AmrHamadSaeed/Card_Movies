@@ -1,16 +1,47 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:card_movies/api_manager.dart';
 import 'package:card_movies/models/api_constant.dart';
 import 'package:card_movies/models/general_list_response.dart';
 import 'package:card_movies/models/movies_response.dart';
+import 'package:card_movies/pages_views/movies_details.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-class BrowseDetails extends StatelessWidget {
+class BrowseDetails extends StatefulWidget {
   Genres itemView;
 
   BrowseDetails({required this.itemView});
 
+  @override
+  State<BrowseDetails> createState() => _BrowseDetailsState();
+}
+
+class _BrowseDetailsState extends State<BrowseDetails> {
   List<Movie> movies = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    print("AAAA $movies");
+
+    super.initState();
+    _fetchMovies();
+  }
+
+  Future<void> _fetchMovies() async {
+    try {
+      final moviesList =
+          await ApiManager.getCategoryMoviesList(widget.itemView.id);
+      setState(() {
+        movies = moviesList?.results ?? [];
+
+        print("AAAA $movies");
+        isLoading = false;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +49,7 @@ class BrowseDetails extends StatelessWidget {
       backgroundColor: Color.fromRGBO(18, 19, 18, 1.0),
       appBar: AppBar(
         title: Text(
-          itemView.name!,
+          widget.itemView.name!,
           style: TextStyle(
             fontSize: 18,
           ),
@@ -53,36 +84,42 @@ class BrowseDetails extends StatelessWidget {
                     itemBuilder:
                         (BuildContext context, int index, int realIndex) {
                       final movie = movies[index];
-                      return Container(
-                        child: Stack(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10.0),
-                              child: CachedNetworkImage(
-                                imageUrl:
-                                    '${ApiConstant.imageBaseUrl}${movie.backdropPath ?? ""}',
-                                imageBuilder: (context, imageProvider) =>
-                                    Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: imageProvider,
-                                      fit: BoxFit.cover,
+                      return InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, MovieDetails.routeName,
+                              arguments: movie);
+                        },
+                        child: Container(
+                          child: Stack(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10.0),
+                                child: CachedNetworkImage(
+                                  imageUrl:
+                                      '${ApiConstant.imageBaseUrl}${movie.backdropPath ?? ""}',
+                                  imageBuilder: (context, imageProvider) =>
+                                      Container(
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                placeholder: (context, url) =>
-                                    CircularProgressIndicator(),
-                                errorWidget: (context, url, error) => Center(
-                                  child: Icon(Icons.error,
-                                      color: Colors.red, size: 42),
+                                  placeholder: (context, url) =>
+                                      CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) => Center(
+                                    child: Icon(Icons.error,
+                                        color: Colors.red, size: 42),
+                                  ),
                                 ),
                               ),
-                            ),
-                            Center(
-                              child: Image.asset('assets/playbutton.png'),
-                            ),
-                          ],
+                              Center(
+                                child: Image.asset('assets/playbutton.png'),
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     },
@@ -141,32 +178,39 @@ class BrowseDetails extends StatelessWidget {
                                   padding: EdgeInsets.symmetric(horizontal: 5),
                                   child: Stack(
                                     children: [
-                                      CachedNetworkImage(
-                                        imageUrl:
-                                            "${ApiConstant.imageBaseUrl}${movie.backdropPath ?? ""}",
-                                        imageBuilder:
-                                            (context, imageProvider) =>
-                                                Container(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.4,
-                                          // Adjust the height as needed
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.cover,
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                              context, MovieDetails.routeName,
+                                              arguments: movie);
+                                        },
+                                        child: CachedNetworkImage(
+                                          imageUrl:
+                                              "${ApiConstant.imageBaseUrl}${movie.backdropPath ?? ""}",
+                                          imageBuilder:
+                                              (context, imageProvider) =>
+                                                  Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.4,
+                                            // Adjust the height as needed
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
                                           ),
+                                          placeholder: (context, url) =>
+                                              CircularProgressIndicator(),
+                                          errorWidget: (context, url, error) =>
+                                              Center(
+                                                  child: Icon(Icons.error,
+                                                      color: Colors.red,
+                                                      size: 42)),
                                         ),
-                                        placeholder: (context, url) =>
-                                            CircularProgressIndicator(),
-                                        errorWidget: (context, url, error) =>
-                                            Center(
-                                                child: Icon(Icons.error,
-                                                    color: Colors.red,
-                                                    size: 42)),
                                       ),
                                     ],
                                   ),
