@@ -4,11 +4,16 @@ import 'package:card_movies/models/movies_response.dart';
 import 'package:card_movies/pages_views/movies_details.dart';
 import 'package:flutter/material.dart';
 
-class TopRatedDetails extends StatelessWidget {
+class TopRatedDetails extends StatefulWidget {
   Movie movie;
 
   TopRatedDetails(this.movie);
 
+  @override
+  State<TopRatedDetails> createState() => _TopRatedDetailsState();
+}
+
+class _TopRatedDetailsState extends State<TopRatedDetails> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -26,10 +31,11 @@ class TopRatedDetails extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     Navigator.pushNamed(context, MovieDetails.routeName,
-                        arguments: movie);
+                        arguments: widget.movie);
                   },
                   child: CachedNetworkImage(
-                    imageUrl: "${ApiConstant.imageBaseUrl}${movie.posterPath}",
+                    imageUrl:
+                        "${ApiConstant.imageBaseUrl}${widget.movie.posterPath}",
                     imageBuilder: (context, imageProvider) => Container(
                       height: MediaQuery.of(context).size.height * 0.30,
                       width: double.infinity,
@@ -59,7 +65,7 @@ class TopRatedDetails extends StatelessWidget {
               children: [
                 Image.asset('assets/star.png', width: 32),
                 Text(
-                  '${movie.voteAverage}',
+                  '${widget.movie.voteAverage}',
                   style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
               ],
@@ -68,7 +74,7 @@ class TopRatedDetails extends StatelessWidget {
               height: 4,
             ),
             Text(
-              '  ${movie.title}',
+              '  ${widget.movie.title}',
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.white,
@@ -79,7 +85,7 @@ class TopRatedDetails extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                '${movie.releaseDate!.substring(0, 4)} ',
+                '${widget.movie.releaseDate!.substring(0, 4)} ',
                 style: TextStyle(fontSize: 12, color: Colors.grey),
               ),
             ),
